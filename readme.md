@@ -18,3 +18,60 @@
 
 3. Complete the problem in part2/question3.php, commit and push your code
 
+
+
+# 📝 Blogger - Laravel Blog App
+
+A modern, clean blog application built with **Laravel 10**, **Blade UI**, **Tailwind CSS** 
+Easily create, edit, view, and delete blog posts.  
+Works **MySQL**. Mobile-friendly and super easy to set up!
+
+---
+
+## 🚀 Features
+
+- Full blog post CRUD (Create, Read, Update, Delete)
+- Blade + Tailwind = simple UI
+- Fields: Title, Author, Content
+- SQLite/MySQL database support
+- Pagination & validation
+- Responsive/mobile-first design(limited)
+- One-command local development
+
+---
+
+## ⚙️ Requirements
+
+- PHP 8.1 or higher
+- Composer
+- Node.js & NPM (for Tailwind assets) 
+- SQLite **or** MySQL
+
+---
+
+## 🛠️ Setup & Installation
+
+### 1. Clone the Repository
+
+```sh
+git clone https://github.com/yourusername/blogger.git
+cd blogger
+cp .env.example .env
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=blogger
+DB_USERNAME=root
+DB_PASSWORD=
+
+
+php artisan key:generate
+php artisan migrate
+php artisan serve
+
+---
+
+## **👨‍💻 Author**  
+**Arun Pragash Alwar**  
+---
