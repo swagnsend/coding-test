@@ -32,9 +32,9 @@ class PostController extends Controller
     {
         // dd($request->all());
         $request->validate([
-        'post' => 'required|string|max:100',
-        'title' => 'required|string|max:255',
-        'autor' => 'required|string|max:255',
+        'post' => 'required|string',
+        'title' => 'required|string|max:100',
+        'autor' => 'required|string|max:50',
         ]);
         Post::create($request->all());
         return redirect()->route('posts.index')->with('success', 'Post created successfully!');
@@ -64,9 +64,9 @@ class PostController extends Controller
     public function update(Request $request, Post $post)
     {
         $request->validate([
-            'post' => 'required|string|max:100',
-            'title' => 'required|string|max:255',
-            'autor' => 'required|string|max:255',
+            'post' => 'sometimes|string',
+            'title' => 'sometimes|string|max:100',
+            'autor' => 'sometimes|string|max:50',
         ]);
         $post->update($request->all());
         return redirect()->route('posts.index')->with('success', 'Post updated successfully!');
