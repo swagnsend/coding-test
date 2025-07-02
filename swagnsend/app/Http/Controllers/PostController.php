@@ -12,8 +12,9 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts=Post::all();
-        return response()->json($posts,200);
+        $posts = Post::latest()->paginate(6);
+        return view('post.index', compact('posts'));
+        // return response()->json($posts,200);
     }
 
     /**
@@ -21,7 +22,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('post.create');
     }
 
     /**
@@ -30,19 +31,13 @@ class PostController extends Controller
     public function store(Request $request)
     {
         // dd($request->all());
-        try{
-            $request->validate([
-            'post' => 'required|string|max:255',
-            'title' => 'required|string|max:255',
-            'autor' => 'required|string|max:255',
-         ]);
-        }
-        catch(\Exception $e){
-            return response()->json(['error' => 'Failed to create post'], 500);
-        }
-
-        $post=Post::create($request->all());
-        return response()->json(['message' => 'Post created successfully', 'post' => $post], 201);
+        $request->validate([
+        'post' => 'required|string|max:100',
+        'title' => 'required|string|max:255',
+        'autor' => 'required|string|max:255',
+        ]);
+        Post::create($request->all());
+        return redirect()->route('posts.index')->with('success', 'Post created successfully!');
     }
 
 
@@ -52,7 +47,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        return response()->json($post, 200);
+        return view('post.show', compact('post'));
     }
 
     /**
@@ -60,7 +55,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        return view('post.edit', compact('post'));
     }
 
     /**
@@ -68,23 +63,15 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        // dd($request->all(), $post);
-        $post=Post::find($post->input('id'));
-
-        try{
-            $request->validate([
-            'post' => 'sometimes|string|max:255',
-            'title' => 'sometimes|string|max:255',
-            'autor' => 'sometimes|string|max:255',
-         ]);
-        }
-        catch(\Exception $e){
-            return response()->json(['error' => 'Failed to update post'], 500);
-        }
-
+        $request->validate([
+            'post' => 'required|string|max:100',
+            'title' => 'required|string|max:255',
+            'autor' => 'required|string|max:255',
+        ]);
         $post->update($request->all());
-        return response()->json(['message' => 'Post updated successfully', 'post' => $post], 200);
+        return redirect()->route('posts.index')->with('success', 'Post updated successfully!');
     }
+
 
     /**
      * Remove the specified resource from storage.
@@ -93,7 +80,6 @@ class PostController extends Controller
     {
 
         $post->delete();
-        return response()->json(['message' => 'Post deleted successfully'], 200);
-        //
+        return redirect()->route('posts.index')->with('success', 'Post deleted successfully!');
     }
 }
