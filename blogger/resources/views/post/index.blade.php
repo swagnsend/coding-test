@@ -1,45 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="max-w-5xl mx-auto p-6">
-    <div class="flex justify-between items-center mb-6">
-        <h1 class="text-3xl font-bold text-indigo-700">All Posts</h1>
-        <a href="{{ route('posts.create') }}"
-           class="bg-indigo-600 text-white px-4 py-2 rounded shadow hover:bg-indigo-800 transition">
-           + New Post
-        </a>
-    </div>
-    <table class="min-w-full bg-white rounded-lg shadow">
-        <thead class="bg-indigo-50">
-            <tr>
-                <th class="p-3">Title</th>
-                <th class="p-3">Author</th>
-                <th class="p-3">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        @forelse($posts as $post)
-            <tr class="border-t">
-                <td class="p-3">{{ $post->title }}</td>
-                <td class="p-3">{{ $post->autor }}</td>
-                <td class="p-3 flex gap-2">
-                    <a href="{{ route('posts.show', $post) }}"
-                       class="text-blue-600 hover:underline">View</a>
-                    <a href="{{ route('posts.edit', $post) }}"
-                       class="text-yellow-600 hover:underline">Edit</a>
-                    <form action="{{ route('posts.destroy', $post) }}" method="POST" onsubmit="return confirm('Delete?')" class="inline">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="text-red-600 hover:underline">Delete</button>
-                    </form>
-                </td>
-            </tr>
-        @empty
-            <tr><td colspan="3" class="text-center p-4 text-gray-400">No posts found.</td></tr>
-        @endforelse
-        </tbody>
-    </table>
-</div>
 
 @if($posts->count())
     <div class="max-w-7xl mx-auto px-4 py-10">
@@ -70,6 +31,46 @@
             @endforeach
         </div>
 
+        <div class="max-w-5xl mx-auto p-6">
+            <div class="flex justify-between items-center mb-6">
+                <h1 class="text-3xl font-bold text-indigo-700">All Posts</h1>
+                <a href="{{ route('posts.create') }}"
+                class="bg-indigo-600 text-white px-4 py-2 rounded shadow hover:bg-indigo-800 transition">
+                + New Post
+                </a>
+            </div>
+            <table class="min-w-full bg-white rounded-lg shadow">
+                <thead class="bg-indigo-50">
+                    <tr>
+                        <th class="p-3">Title</th>
+                        <th class="p-3">Author</th>
+                        <th class="p-3">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @forelse($posts as $post)
+                    <tr class="border-t">
+                        <td class="p-3">{{ $post->title }}</td>
+                        <td class="p-3">{{ $post->autor }}</td>
+                        <td class="p-3 flex gap-2">
+                            <a href="{{ route('posts.show', $post) }}"
+                            class="text-blue-600 hover:underline">View</a>
+                            <a href="{{ route('posts.edit', $post) }}"
+                            class="text-yellow-600 hover:underline">Edit</a>
+                            <form action="{{ route('posts.destroy', $post) }}" method="POST" onsubmit="return confirm('Delete?')" class="inline">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="text-red-600 hover:underline">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                @empty
+                    <tr><td colspan="3" class="text-center p-4 text-gray-400">No posts found.</td></tr>
+                @endforelse
+                </tbody>
+            </table>
+        </div>
+
         @if(method_exists($posts, 'links'))
         <div class="flex justify-center mt-10">
             {{ $posts->links('pagination::tailwind') }}
@@ -77,5 +78,7 @@
         @endif
     </div>
 @endif
+
+x
 
 @endsection
